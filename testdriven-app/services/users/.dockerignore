@@ -1,0 +1,4 @@
+Pipenv.lock
+.dockerignore
+Dockerfile-dev
+Dockerfile-prod

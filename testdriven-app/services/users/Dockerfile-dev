@@ -1,0 +1,23 @@
+# base image
+FROM python:3.7.2-alpine
+
+# set working directory
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+
+# add and install requirements
+COPY Pipfile /usr/src/app/Pipfile
+
+RUN apk update \
+        && apk add --no-cache git openssh-client \
+        && pip install pipenv \
+        && addgroup -S -g 1001 app \
+        && adduser -S -D -h /app -u 1001 -G app app
+
+RUN pipenv install
+
+# add app
+COPY . /usr/src/app
+
+# run server
+CMD python manage.py run -h 0.0.0.0
