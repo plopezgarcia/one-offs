@@ -8,16 +8,31 @@ WORKDIR /usr/src/app
 # add and install requirements
 COPY Pipfile /usr/src/app/Pipfile
 
+# For Postgresql
+RUN apk update && \
+    apk add --virtual build-deps gcc python-dev musl-dev && \
+    apk add postgresql-dev && \
+    apk add netcat-openbsd
+
+# For pipenv
 RUN apk update \
         && apk add --no-cache git openssh-client \
         && pip install pipenv \
         && addgroup -S -g 1001 app \
         && adduser -S -D -h /app -u 1001 -G app app
 
+# Install python dependencies in pinenv virtual environment
 RUN pipenv install
+
+# run server (now overriden by entrypoint.sh)
+# CMD pipenv run python manage.py run -h 0.0.0.0
+
+# add entrypoint.sh
+COPY ./entrypoint.sh /usr/src/app/entrypoint.sh
+RUN chmod +x /usr/src/app/entrypoint.sh
 
 # add app
 COPY . /usr/src/app
 
 # run server
-CMD pipenv run python manage.py run -h 0.0.0.0
+CMD ["/usr/src/app/entrypoint.sh"]

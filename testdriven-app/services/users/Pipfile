@@ -7,6 +7,9 @@ verify_ssl = true
 
 [packages]
 flask = "==1.0.2"
+flask-sqlalchemy = "==2.3.2"
+psycopg2-binary = "==2.7.6.1"
+flask-testing = "==0.7.1"
 
 [requires]
 python_version = "3.7"
