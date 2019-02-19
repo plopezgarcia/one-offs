@@ -1,0 +1,12 @@
+# Build container
+
+sudo docker-compose -f docker-compose-dev.yml up -d --build
+
+# Execute
+
+sudo docker-compose -f docker-compose-dev.yml exec users pipenv run python manage.py test
+
+# Equivalent: sudo docker exec -it 187ffb181b6b pipenv run python manage.py test
+
+
+

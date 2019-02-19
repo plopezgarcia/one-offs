@@ -16,10 +16,10 @@ RUN apk update && \
 
 # For pipenv
 RUN apk update \
-        && apk add --no-cache git openssh-client \
-        && pip install pipenv \
-        && addgroup -S -g 1001 app \
-        && adduser -S -D -h /app -u 1001 -G app app
+    && apk add --no-cache git openssh-client \
+    && pip install pipenv \
+    && addgroup -S -g 1001 app \
+    && adduser -S -D -h /app -u 1001 -G app app
 
 # Install python dependencies in pinenv virtual environment
 RUN pipenv install
